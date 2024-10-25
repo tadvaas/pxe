@@ -86,6 +86,7 @@ server {
 ```
 
 ## WinPE iPXE boot firmware & files
+wimboot is a small boot loader that allows iPXE to load and boot .wim (Windows Imaging Format) files, which are commonly used for deploying Windows operating systems:
 ```
 cd ~/html/win11/ && wget https://github.com/ipxe/wimboot/releases/latest/download/wimboot
 ```

@@ -1,15 +1,20 @@
 # Software
-- Boot firmware: iPXE
+
+## Boot firmware: iPXE
   - UEFI
   - Legacy
-- HTTP server: nginx
-- TFTP server: tftpd-hpa
-  - /etc/default/tftp-hpa:
+
+## HTTP server: nginx
+
+## TFTP server: tftpd-hpa
+Edit /etc/default/tftp-hpa:
 ```
 TFTP_USERNAME="oxwet"
 TFTP_DIRECTORY="/home/oxwet/tftp/"
 TFTP_ADDRESS="0.0.0.0:69"
 TFTP_OPTIONS="--secure --ipv4 -vvv --map-file /etc/default/tftpd-hpa.map"
+
+Edit /etc/default/tftpd-hpa.map
 ```
   - /etc/default/tftpd-hpa.map
 ```

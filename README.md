@@ -1,7 +1,7 @@
 # Software
 
 ## TFTP server: tftpd-hpa
-We could use integrated pfSens tftp server, however, it does not support map files, hence, we are using tftpd-hpa server:
+We could use integrated pfSense TFTP server, however, it does not support map files, hence, we are using tftpd-hpa server:
 Create server directory:
 ```
 mkdir ~/tftp/
@@ -22,7 +22,7 @@ rg (.*)[^a-zA-Z0-9]$ \1 # remove all non-ascii characters from the filename
 
 ## Boot firmware: iPXE
 ### For legacy bios client boots
-You will need to compile a custom undionly.kpxe:
+You will need to compile a custom undionly.kpxe, this will allow us to define custom chain loading file and allow iPXE firmware to load further files from http server instead of tftp, this allows for a way faster downloading of WinPE files:
 ```
 git clone https://github.com/ipxe/ipxe.git
 cd ipxe/src

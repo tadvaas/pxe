@@ -191,9 +191,10 @@ mkdir ~/samba/
 
 ## WinPE files
   - Download & install Windows Deployment and Imaging Tools Environment
-  - Extract image using DISM
+  - Extract image using DISM ```copype amd64 C:\WinPE_amd64```
   - Download NIC drives
   - Add drivers to image
+  - Add optional features Scripting/WinPE-WMI and Startup/WinPE-SecureStartup into the WinPE image for the Windows 11 installer to start successfully
   - Create the image
   - Copy files to http server ~/html/win11/:
       - media/Boot/BCD

@@ -1,6 +1,7 @@
 # Software
 
 ## TFTP server: tftpd-hpa
+We could use integrated pfSens tftp server, however, it does not support map files, hence, we are using tftpd-hpa server:
 Create server directory:
 ```
 mkdir ~/tftp/
@@ -14,7 +15,7 @@ TFTP_ADDRESS="0.0.0.0:69"
 TFTP_OPTIONS="--secure --ipv4 -vvv --map-file /etc/default/tftpd-hpa.map"
 ```
 
-Edit /etc/default/tftpd-hpa.map
+In order to solve the bug on some intel cards adding extra non-ascii characters (0xff issue) to the end of file, we need to create a map file and instruct to remove these non-ascii characters by creating the file /etc/default/tftpd-hpa.map as follows:
 ```
 rg (.*)[^a-zA-Z0-9]$ \1 # remove all non-ascii characters from the filename
 ```

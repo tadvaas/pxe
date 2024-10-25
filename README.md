@@ -1,7 +1,7 @@
 # Software
 
 ## Boot firmware: iPXE
-### UEFI 
+### For UEFI bios client boots 
 
 Files:
 - uefi.pxe: original to be used is fine
@@ -10,8 +10,16 @@ Files:
 dhcp
 chain [http-path]/boot.ipxe
 ```
-### Legacy
-#### undionly.kpxe: this file needs to be compiled from source with embed.ipxe file
+### For legacy bios client boots
+You will need to compile a custom undionly.kpxe:
+```
+git clone https://github.com/ipxe/ipxe.git
+cd ipxe/src
+echo 'dhcp
+chain http://192.168.0.26/win11/boot.ipxe' > embedded.ipxe
+sudo apt install gcc binutils make perl liblzma-dev xz-utils mtools genisoimage syslinux
+make bin/undionly.kpxe EMBED=embedded.ipxe
+```
 
 ## HTTP server: nginx
 

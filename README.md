@@ -210,4 +210,5 @@ mkdir ~/samba/
 
 ## Windows 11 installation files
   - Download ISO and copy from Microsoft
-  - autounattend.xml
+  - Host extracted ISO files on samba share ~/samba/win11/
+  - Create autounattend.xml and copy to samba share ~/samba/win11/

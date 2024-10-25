@@ -25,10 +25,19 @@ You will need to compile a custom undionly.kpxe:
 ```
 git clone https://github.com/ipxe/ipxe.git
 cd ipxe/src
-echo -e 'dhcp\nchain [http-path]/boot.ipxe' > embedded.ipxe
+```
+Create ~/ipxe/src/embedded.ipxe file:
+```
+dhcp
+chain [http-path]/boot.ipxe
+```
+
+Install required tools and compile new undionly.pxe boot firmware:
+```
 sudo apt install gcc binutils make perl liblzma-dev xz-utils mtools genisoimage syslinux
 make bin/undionly.kpxe EMBED=embedded.ipxe
 ```
+
 ### For UEFI bios client boots 
 
 Files:

@@ -15,14 +15,14 @@ TFTP_ADDRESS="0.0.0.0:69"
 TFTP_OPTIONS="--secure --ipv4 -vvv --map-file /etc/default/tftpd-hpa.map"
 ```
 
-In order to solve the bug on some intel cards adding extra non-ascii characters (0xff issue) to the end of file, we need to create a map file and instruct to remove these non-ascii characters by creating the file /etc/default/tftpd-hpa.map as follows:
+In order to solve the bug on some intel cards adding extra non-ascii characters (0xff issue) to the end of file, we need to create a map file and instruct to remove these non-ascii characters by creating the file **/etc/default/tftpd-hpa.map** as follows:
 ```
 rg (.*)[^a-zA-Z0-9]$ \1 # remove all non-ascii characters from the filename
 ```
 
 ## Boot firmware: iPXE
 ### For legacy bios client boots
-You will need to compile a custom undionly.kpxe, this will allow us to define custom chain loading file and allow iPXE firmware to load further files from http server instead of tftp, this allows for a way faster downloading of WinPE files:
+You will need to compile a custom **undionly.kpxe**, this will allow us to define custom chain loading file and allow iPXE firmware to load further files from http server instead of tftp, this allows for a way faster downloading of WinPE files:
 ```
 git clone https://github.com/ipxe/ipxe.git
 cd ipxe/src
@@ -33,7 +33,7 @@ dhcp
 chain [http-path]/boot.ipxe
 ```
 
-Install required tools and compile new undionly.pxe boot firmware:
+Install required tools and compile new **undionly.pxe** boot firmware:
 ```
 sudo apt install gcc binutils make perl liblzma-dev xz-utils mtools genisoimage syslinux
 make bin/undionly.kpxe EMBED=embedded.ipxe
@@ -42,8 +42,8 @@ make bin/undionly.kpxe EMBED=embedded.ipxe
 ### For UEFI bios client boots 
 
 Files:
-- uefi.pxe: original to be used is fine
-- autoexec.ipxe: edit as follows:
+- **uefi.pxe**: original to be used is fine
+- **autoexec.ipxe**: this is auto-loaded file that **eufi.pxe** loads as firmware boots, we add instructions to load further files from http server:
 ```
 dhcp
 chain [http-path]/boot.ipxe
@@ -56,9 +56,14 @@ cp bin/undionly.kpxe ~/tftp/undionly.kpxe
 
 ## HTTP server: nginx
 
-Install nginx:
+To server WinPE files we install nginx http server:
 ```
 sudo apt install nginx
+```
+
+Create a directory where nginx will serve files from:
+```
+mkdir ~/html/
 ```
 
 Edit /etc/nginx/sites-enabled/default:

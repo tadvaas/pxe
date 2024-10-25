@@ -193,10 +193,6 @@ mkdir ~/samba/
       - media/Boot/boot.sdi
       - media/sources/boot.wim
 
-## Auto start install files
-  - install.bat
-  - winpeshl.ini
-
 ## Windows 11 installation files
   - Download ISO and copy from Microsoft
   - autounattend.xml

@@ -22,7 +22,7 @@ chain [http-path]/boot.ipxe
 ### Copy firmware TFTP server
 ```
 cp bin-x86_64-efi/ipxe.efi ~/tftp/ipxe.efi
-cp bin/undionly.kpxe ~/undionly.kpxe
+cp bin/undionly.kpxe ~/tftp/undionly.kpxe
 ```
 
 ## HTTP server: nginx

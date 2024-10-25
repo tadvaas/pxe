@@ -1,8 +1,8 @@
 # Software
 
 ## Boot firmware: iPXE
-  - UEFI
-  - Legacy
+### UEFI 
+### Legacy
 
 ## HTTP server: nginx
 

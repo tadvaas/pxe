@@ -21,19 +21,20 @@ Edit /etc/default/tftpd-hpa.map
 rg (.*)[^a-zA-Z0-9]$ \1 # remove all non-ascii characters from the filename
 ```
 
-- DHCP server: Kea on pfSense
-- Network share: Samba
-- WinPE files
+## DHCP server: Kea on pfSense
+
+## Network share: Samba
+## WinPE files
   - Extract image using DISM
   - Download NIC drives
   - Add drivers to image
   - Create the image
   - Files go to ~/html/win11
 
-- Auto start install files
+## Auto start install files
   - install.bat
   - winpeshl.ini
 
-- Windows 11 installation files
+## Windows 11 installation files
   - Download ISO and copy from Microsoft
   - autounattend.xml

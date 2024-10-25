@@ -11,6 +11,11 @@ TFTP_DIRECTORY="/home/oxwet/tftp/"
 TFTP_ADDRESS="0.0.0.0:69"
 TFTP_OPTIONS="--secure --ipv4 -vvv --map-file /etc/default/tftpd-hpa.map"
 ```
+  - /etc/default/tftpd-hpa.map
+```
+rg (.*)[^a-zA-Z0-9]$ \1 # remove all non-ascii characters from the filename
+```
+
 - DHCP server: Kea on pfSense
 - Network share: Samba
 - WinPE files

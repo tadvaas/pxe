@@ -192,10 +192,17 @@ mkdir ~/samba/
 ## WinPE files
   - Download & install Windows Deployment and Imaging Tools Environment
   - Extract image using DISM ```copype amd64 C:\WinPE_amd64```
-  - Download NIC drives
-  - Add drivers to image
+  - Mount the image ```Dism /Mount-Image /ImageFile:C:\WinPE_amd64\media\sources\boot.wim /Index:1 /MountDir:C:\WinPE_amd64\mount```
   - Add optional features Scripting/WinPE-WMI and Startup/WinPE-SecureStartup into the WinPE image for the Windows 11 installer to start successfully
+      - ```Dism /Image:C:\WinPE_amd64\mount /Add-Package /PackagePath:"C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Windows Preinstallation Environment\amd64\WinPE_OCs\WinPE-WMI.cab"```
+      - ```Dism /Image:C:\WinPE_amd64\mount /Add-Package /PackagePath:"C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Windows Preinstallation Environment\amd64\WinPE_OCs\WinPE-Scripting.cab"```
+      - ```Dism /Image:C:\WinPE_amd64\mount /Add-Package /PackagePath:"C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Windows Preinstallation Environment\amd64\WinPE_OCs\WinPE-SecureStartup.cab"```
+      - ```Dism /Image:C:\WinPE_amd64\mount /Add-Package /PackagePath:"C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Windows Preinstallation Environment\amd64\WinPE_OCs\WinPE-NetFX.cab"```
+  - Download NIC drivers and extract them
+  - Add extracted drivers to image
+      - ```Dism /Image:C:\WinPE_amd64\mount /Add-Driver /Driver:C:\Drivers /Recurse```
   - Create the image
+      - ```Dism /Unmount-Image /MountDir:C:\WinPE_amd64/mount /Commit```
   - Copy files to http server ~/html/win11/:
       - media/Boot/BCD
       - media/Boot/boot.sdi

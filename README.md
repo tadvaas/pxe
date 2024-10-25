@@ -128,7 +128,6 @@ menu Boot Menu
 item --gap -- ----------------------
 item local   Boot from Hard Drive
 item win11   Boot Windows Install
-item hirens  Boot Hirens BootCD PE
 item --gap -- ----------------------
 item reboot  Reboot
 choose --default local --timeout 10000 target && goto ${target}
@@ -146,17 +145,6 @@ initrd winpeshl.ini                                     winpeshl.ini
 initrd ${base-url}/media/Boot/BCD                       BCD
 initrd ${base-url}/media/Boot/boot.sdi                  boot.sdi
 initrd ${base-url}/media/sources/boot.wim               boot.wim
-boot
-
-:hirens
-dhcp
-set base-url http://192.168.0.26/hirens
-
-kernel ${base-url/}wimboot
-initrd ${base-url}/bootmgr                               bootmgr
-initrd ${base-url}/boot/BCD                              BCD
-initrd ${base-url}/boot/boot.sdi                         boot.sdi
-initrd ${base-url}/sources/boot.wim                      boot.wim
 boot
 
 :reboot

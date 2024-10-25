@@ -80,6 +80,11 @@ server {
   - Create the image
   - Files go to ~/html/win11
 
+## WinPE iPXE boot firmware
+```
+cd ~/html/win11/ && wget https://github.com/ipxe/wimboot/releases/latest/download/wimboot
+```
+
 ## Auto start install files
   - install.bat
   - winpeshl.ini

@@ -4,14 +4,12 @@
   - Legacy
 - HTTP server: nginx
 - TFTP server: tftpd-hpa
-
 ```
 TFTP_USERNAME="oxwet"
 TFTP_DIRECTORY="/home/oxwet/tftp/"
 TFTP_ADDRESS="0.0.0.0:69"
 TFTP_OPTIONS="--secure --ipv4 -vvv --map-file /etc/default/tftpd-hpa.map"
 ```
-
 - DHCP server: Kea on pfSense
 - Network share: Samba
 - WinPE files

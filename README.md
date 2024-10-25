@@ -152,7 +152,7 @@ reboot
 ```
 
 ## DHCP server: Kea on pfSense
-Expand **Network Booting** && Enable Network Booting
+Expand **Network Booting** && **Enable Network Booting**
 - **Next Server:** [TFTP Server IP]
 - **Default BIOS File Name:** undionly.kpxe
 - **UEFI 32 bit File Name:** ipxe.efi

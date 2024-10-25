@@ -2,6 +2,12 @@
 
 ## Boot firmware: iPXE
 ### UEFI 
+- uefi.pxe
+- autoexec.ipxe
+```
+dhcp
+chain [http-path]/boot.ipxe
+```
 ### Legacy
 
 ## HTTP server: nginx

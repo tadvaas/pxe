@@ -2,13 +2,16 @@
 
 ## Boot firmware: iPXE
 ### UEFI 
-- uefi.pxe
-- autoexec.ipxe
+
+Files:
+- uefi.pxe: original to be used is fine
+- autoexec.ipxe: edit as follows:
 ```
 dhcp
 chain [http-path]/boot.ipxe
 ```
 ### Legacy
+#### undionly.kpxe: this file needs to be compiled from source with embed.ipxe file
 
 ## HTTP server: nginx
 

@@ -84,6 +84,41 @@ server {
 cd ~/html/win11/ && wget https://github.com/ipxe/wimboot/releases/latest/download/wimboot
 ```
 
+
+Create install.bat in ~/html/win11/:
+```
+@echo off
+wpeinit
+echo [INFO] Network initialized with wpeinit.
+if errorlevel 1 (
+    echo [ERROR] Failed to initialize the network with wpeinit.
+    pause
+    exit /b 1
+)
+
+:: Retry loop for network share
+:check_share
+echo [INFO] Attempting to map network share...
+net use Z: \\192.168.0.26\shared\win11 /persistent:no > nul 2>&1
+if errorlevel 1 (
+    echo [ERROR] Failed to map network share. Retrying in 30 seconds...
+    ping -n 31 127.0.0.1 > nul
+    goto check_share
+)
+
+echo [INFO] Network share mapped successfully.
+
+Z:\setup.exe
+
+echo [INFO] Windows setup has been started successfully.
+```
+
+Create winpeshl.ini in ~/html/win11/:
+```
+[LaunchApps]
+"install.bat"
+```
+
 Create boot.ipxe in ~/html/win11/:
 ```
 
@@ -126,40 +161,6 @@ boot
 
 :reboot
 reboot
-```
-
-Create install.bat in ~/html/win11/:
-```
-@echo off
-wpeinit
-echo [INFO] Network initialized with wpeinit.
-if errorlevel 1 (
-    echo [ERROR] Failed to initialize the network with wpeinit.
-    pause
-    exit /b 1
-)
-
-:: Retry loop for network share
-:check_share
-echo [INFO] Attempting to map network share...
-net use Z: \\192.168.0.26\shared\win11 /persistent:no > nul 2>&1
-if errorlevel 1 (
-    echo [ERROR] Failed to map network share. Retrying in 30 seconds...
-    ping -n 31 127.0.0.1 > nul
-    goto check_share
-)
-
-echo [INFO] Network share mapped successfully.
-
-Z:\setup.exe
-
-echo [INFO] Windows setup has been started successfully.
-```
-
-Create winpeshl.ini in ~/html/win11/:
-```
-[LaunchApps]
-"install.bat"
 ```
 
 ## DHCP server: Kea on pfSense

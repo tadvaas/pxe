@@ -159,6 +159,30 @@ Expand **Network Booting** && **Enable Network Booting**
 - **UEFI 64 bit File Name:** ipxe.efi
 
 ## Network share: Samba
+Install:
+```
+sudo apt install samba
+```
+
+Edit config file /etc/samba/smb.conf:
+```
+[global]
+map to guest = Bad User
+guest account = oxwet
+
+[shared]
+path = /home/oxwet/samba
+browseable = yes
+read only = no
+guest ok = yes
+
+```
+
+Create server directory:
+```
+mkdir ~/samba/
+```
+
 ## WinPE files
   - Extract image using DISM
   - Download NIC drives

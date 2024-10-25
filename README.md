@@ -188,9 +188,10 @@ mkdir ~/samba/
   - Download NIC drives
   - Add drivers to image
   - Create the image
-  - Files go to ~/html/win11
-
-
+  - Copy files to http server ~/html/win11/:
+      - media/Boot/BCD
+      - media/Boot/boot.sdi
+      - media/sources/boot.wim
 
 ## Auto start install files
   - install.bat

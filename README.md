@@ -91,8 +91,7 @@ wimboot is a small boot loader that allows iPXE to load and boot .wim (Windows I
 cd ~/html/win11/ && wget https://github.com/ipxe/wimboot/releases/latest/download/wimboot
 ```
 
-
-Create install.bat in ~/html/win11/:
+This WinPE script initializes network access with wpeinit, checks for success, and then attempts to map the network share \\192.168.0.26\shared\win11 as drive Z:. If mapping fails, it retries every 30 seconds until successful. Once mapped, it starts the Windows installation by running Z:\setup.exe, ensuring the network and drive are ready before proceeding with setup:
 ```
 @echo off
 wpeinit

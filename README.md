@@ -5,7 +5,7 @@
 - HTTP server: nginx
 - TFTP server: tftpd-hpa
 
-  ```
+```
 TFTP_USERNAME="oxwet"
 TFTP_DIRECTORY="/home/oxwet/tftp/"
 TFTP_ADDRESS="0.0.0.0:69"

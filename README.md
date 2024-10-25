@@ -4,6 +4,7 @@
   - Legacy
 - HTTP server: nginx
 - TFTP server: tftpd-hpa
+  - /etc/default/tftp-hpa:
 ```
 TFTP_USERNAME="oxwet"
 TFTP_DIRECTORY="/home/oxwet/tftp/"

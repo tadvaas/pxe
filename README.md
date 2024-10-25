@@ -1,5 +1,24 @@
 # Software
 
+## TFTP server: tftpd-hpa
+Create server directory:
+```
+mkdir ~/tftp/
+```
+
+Edit /etc/default/tftp-hpa:
+```
+TFTP_USERNAME="oxwet"
+TFTP_DIRECTORY="/home/oxwet/tftp/"
+TFTP_ADDRESS="0.0.0.0:69"
+TFTP_OPTIONS="--secure --ipv4 -vvv --map-file /etc/default/tftpd-hpa.map"
+```
+
+Edit /etc/default/tftpd-hpa.map
+```
+rg (.*)[^a-zA-Z0-9]$ \1 # remove all non-ascii characters from the filename
+```
+
 ## Boot firmware: iPXE
 ### For legacy bios client boots
 You will need to compile a custom undionly.kpxe:
@@ -27,17 +46,28 @@ cp bin/undionly.kpxe ~/tftp/undionly.kpxe
 
 ## HTTP server: nginx
 
-## TFTP server: tftpd-hpa
-Edit /etc/default/tftp-hpa:
+Install nginx:
 ```
-TFTP_USERNAME="oxwet"
-TFTP_DIRECTORY="/home/oxwet/tftp/"
-TFTP_ADDRESS="0.0.0.0:69"
-TFTP_OPTIONS="--secure --ipv4 -vvv --map-file /etc/default/tftpd-hpa.map"
+sudo apt install nginx
 ```
-Edit /etc/default/tftpd-hpa.map
+
+Edit /etc/nginx/sites-enabled/default:
 ```
-rg (.*)[^a-zA-Z0-9]$ \1 # remove all non-ascii characters from the filename
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    root /home/oxwet/html;
+    index index.html;
+
+    server_name _;
+
+    location / {
+        autoindex on;  # Enable directory listing for troubleshooting
+        try_files $uri $uri/ =404;
+    }
+}
+
 ```
 
 ## DHCP server: Kea on pfSense

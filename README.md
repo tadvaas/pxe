@@ -79,7 +79,7 @@ server {
 
 ```
 
-## WinPE iPXE boot firmware
+## WinPE iPXE boot firmware & files
 ```
 cd ~/html/win11/ && wget https://github.com/ipxe/wimboot/releases/latest/download/wimboot
 ```

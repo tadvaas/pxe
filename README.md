@@ -184,6 +184,7 @@ mkdir ~/samba/
 ```
 
 ## WinPE files
+  - Download & install Windows Deployment and Imaging Tools Environment
   - Extract image using DISM
   - Download NIC drives
   - Add drivers to image

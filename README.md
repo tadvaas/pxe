@@ -42,8 +42,7 @@ Files:
 - **uefi.pxe**: original to be used is fine
 - **autoexec.ipxe**: this is auto-loaded file that **eufi.pxe** loads as firmware boots, we add instructions to load further files from http server:
 ```
-dhcp
-chain [http-path]/boot.ipxe
+echo -e 'dhcp\nchain [your-http-path]/boot.ipxe' | tee ~/tftp/autoexec.ipxe
 ```
 ### Copy firmware TFTP server
 ```

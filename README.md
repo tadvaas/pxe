@@ -87,33 +87,9 @@ wimboot is a small boot loader that allows iPXE to load and boot .wim (Windows I
 cd ~/html/win11/ && wget https://github.com/ipxe/wimboot/releases/latest/download/wimboot
 ```
 
-This WinPE script initializes network access with wpeinit, checks for success, and then attempts to map the network share \\192.168.0.26\shared\win11 as drive Z:. If mapping fails, it retries every 30 seconds until successful. Once mapped, it starts the Windows installation by running Z:\setup.exe, ensuring the network and drive are ready before proceeding with setup:
-```
-@echo off
-wpeinit
-echo [INFO] Network initialized with wpeinit.
-if errorlevel 1 (
-    echo [ERROR] Failed to initialize the network with wpeinit.
-    pause
-    exit /b 1
-)
+This batch script automates initialisation in a WinPE environment by setting up network and storage drivers, attempting to map a network share drive (Z:) to a specified path (\\192.168.0.26\shared\win11), and starting an unattended Windows setup if successful. First, it verifies network initialisation with wpeinit, exiting on failure. Then, in a retry loop, it maps the network share, reattempting every 30 seconds if unsuccessful. Once mapped, it launches setup.exe from the network drive with an unattended setup file (unattend.xml), allowing Windows installation to proceed without user input:
 
-:: Retry loop for network share
-:check_share
-echo [INFO] Attempting to map network share...
-net use Z: \\192.168.0.26\shared\win11 /persistent:no > nul 2>&1
-if errorlevel 1 (
-    echo [ERROR] Failed to map network share. Retrying in 30 seconds...
-    ping -n 31 127.0.0.1 > nul
-    goto check_share
-)
-
-echo [INFO] Network share mapped successfully.
-
-Z:\setup.exe
-
-echo [INFO] Windows setup has been started successfully.
-```
+[install.bat](/html/win11/install.bat)
 
 Create winpeshl.ini in ~/html/win11/:
 ```
@@ -123,7 +99,7 @@ Create winpeshl.ini in ~/html/win11/:
 
 Create boot.ipxe in ~/html/win11/:
 
-[Link to file](/html/win11/boot.ipxe)
+[boot.ipxe](/html/win11/boot.ipxe)
 
 ## DHCP server: Kea on pfSense
 Expand **Network Booting** && **Enable Network Booting**

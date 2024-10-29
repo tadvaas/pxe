@@ -122,36 +122,8 @@ Create winpeshl.ini in ~/html/win11/:
 ```
 
 Create boot.ipxe in ~/html/win11/:
-```
 
-#!ipxe
-:start
-menu Boot Menu
-item --gap -- ----------------------
-item local   Boot from Hard Drive
-item win11   Boot Windows Install
-item --gap -- ----------------------
-item reboot  Reboot
-choose --default local --timeout 10000 target && goto ${target}
-
-:local
-exit 1
-
-:win11
-dhcp
-set base-url http://192.168.0.26/win11
-
-kernel wimboot
-initrd install.bat                                      install.bat
-initrd winpeshl.ini                                     winpeshl.ini
-initrd ${base-url}/media/Boot/BCD                       BCD
-initrd ${base-url}/media/Boot/boot.sdi                  boot.sdi
-initrd ${base-url}/media/sources/boot.wim               boot.wim
-boot
-
-:reboot
-reboot
-```
+[Link to file](/html/win11/boot.ipxe)
 
 ## DHCP server: Kea on pfSense
 Expand **Network Booting** && **Enable Network Booting**

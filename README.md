@@ -1,4 +1,4 @@
-# Software Test
+# Software
 
 ## TFTP server: tftpd-hpa
 We could use integrated pfSense TFTP server, however, it does not support map files, hence, we are using tftpd-hpa server:

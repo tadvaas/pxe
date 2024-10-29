@@ -1,0 +1,52 @@
+#!ipxe
+:start
+menu Boot Menu
+item --gap -- ----------------------
+item local      Boot from Hard Drive
+item win11m     Boot Windows Manual (Manual Partition)
+item win11au	Boot Windows Auto (Wipe Hard Drive UEFI)
+item win11al	Boot Windows Auto (Wipe Hard Drive Legacy)
+item hirens     Boot Hirens BootCD PE
+item --gap -- ----------------------
+item reboot     Reboot
+choose --default local --timeout 10000 target && goto ${target}
+
+set base-url http://192.168.0.26/
+
+:local
+exit 1
+
+:boot_windows
+dhcp
+kernel ${base-url}/win11/wimboot
+initrd -n unattend.xml ${unattend_file} unattend.xml
+initrd -n install.bat ${base-url}/win11/install.bat install.bat
+initrd -n winpeshl.ini ${base-url}/win11/winpeshl.ini winpeshl.ini
+initrd -n BCD ${base-url}/win11/media/Boot/BCD BCD
+initrd -n boot.sdi ${base-url}/win11/media/Boot/boot.sdi boot.sdi
+initrd -n boot.wim ${base-url}/win11/media/sources/boot.wim boot.wim
+boot
+
+:win11m
+set unattend_file ${base-url}/win11/unattend-manual.xml
+goto boot_windows
+
+:win11au
+set unattend_file ${base-url}/win11/unattend-auto-uefi.xml
+goto boot_windows
+
+:win11al
+set unattend_file ${base-url}/win11/unattend-auto-legacy.xml
+goto boot_windows
+
+:hirens
+dhcp
+kernel ${base-url}/hirens/wimboot
+initrd -n bootmgr ${base-url}/hirens/bootmgr bootmgr
+initrd -n BCD ${base-url}/hirens/boot/BCD BCD
+initrd -n boot.sdi ${base-url}/hirens/boot/boot.sdi boot.sdi
+initrd -n boot.wim ${base-url}/hirens/sources/boot.wim boot.wim
+boot
+
+:reboot
+reboot

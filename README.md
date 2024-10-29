@@ -155,4 +155,7 @@ mkdir ~/samba/
 ## Windows 11 installation files
   - Download ISO and copy from Microsoft
   - Host extracted ISO files on samba share ~/samba/win11/
-  - Create autounattend.xml and copy to samba share ~/samba/win11/
+  - Create answer files for unattended installations and copy to samba share ~/samba/win11/
+    - [Windows Manual (Manual Partition)](/html/win11/unattend-manual.xml)
+    - [Windows Windows Auto (Wipe Hard Drive UEFI)](/html/win11/unattend-auto-uefi.xml)
+    - [Windows Windows Auto (Wipe Hard Drive Legacy)](/html/win11/unattend-auto-legacy.xml)

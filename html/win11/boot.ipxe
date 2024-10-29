@@ -2,13 +2,29 @@
 :start
 menu Boot Menu
 item --gap -- ----------------------
-item local      Boot from Hard Drive
-item win11m     Boot Windows Manual (Manual Partition)
-item win11au	Boot Windows Auto (Wipe Hard Drive UEFI)
-item win11al	Boot Windows Auto (Wipe Hard Drive Legacy)
+
+# Common options
+item local      Hard Drive
+item win11m     Windows Install (Manual Partition)
+
+# Conditionally show items depending on UEFI or BIOS platform
+iseq ${platform} efi && goto uefi_menu || goto bios_menu
+
+:uefi_menu
+item win11au    UEFI Windows Install (Wipe Hard Drive)
+goto end_menu
+
+:bios_menu
+item win11al    BIOS Windows Install (Wipe Hard Drive)
+goto end_menu
+
+:end_menu
+# Shared options for both BIOS and UEFI
 item hirens     Boot Hirens BootCD PE
+item shredos    Boot ShredOS
 item --gap -- ----------------------
 item reboot     Reboot
+
 choose --default local --timeout 10000 target && goto ${target}
 
 set base-url http://192.168.0.26/
@@ -46,6 +62,15 @@ initrd -n bootmgr ${base-url}/hirens/bootmgr bootmgr
 initrd -n BCD ${base-url}/hirens/boot/BCD BCD
 initrd -n boot.sdi ${base-url}/hirens/boot/boot.sdi boot.sdi
 initrd -n boot.wim ${base-url}/hirens/sources/boot.wim boot.wim
+boot
+
+:shredos
+dhcp
+kernel ${base-url}/shredos/boot/shredos console=tty3 quiet loglevel=0 loadkeys=uk rw \
+        nwipe_options="--method=zero --verify=off --noblank --nousb" \
+        lftp="set sftp:auto-confirm true; open sftp://shredos:shredos@192.168.0.18; \
+              cd /home/shredos/reports/; mput *.pdf; \
+              cd /home/shredos/logs/; mput nwipe_*.txt;"
 boot
 
 :reboot

@@ -176,19 +176,19 @@ mkdir ~/samba/
 
 ## Add Windows updates to the image
 
-:: Create a mount directory
+Create a mount directory
 mkdir C:\Mount
 
-:: Mount the Windows image from the WIM file
+Mount the Windows image from the WIM file
 dism /mount-wim /wimfile:C:\install.wim /index:1 /mountdir:C:\Mount
 
-:: Add all updates from the Downloads folder to the mounted image
+Add all updates from the Downloads folder to the mounted image
 for %f in (C:\Users\user\Downloads\*.msu) do dism /image:C:\Mount /add-package /packagepath:%f
 
-:: Commit changes and unmount the image
+Commit changes and unmount the image
 dism /unmount-wim /mountdir:C:\Mount /commit
 
-:: Optionally remove the mount directory
+Optionally remove the mount directory
 rmdir C:\Mount
 
 Copy the install.win to \\network share\win11\sources\

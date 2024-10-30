@@ -156,6 +156,20 @@ mkdir ~/samba/
   - Download ISO and copy from Microsoft
   - Host extracted ISO files on samba share ~/samba/win11/
   - Create answer files for unattended installations and copy to samba share ~/samba/win11/
-    - [Windows Manual (Manual Partition)](/html/win11/unattend-manual.xml)
-    - [Windows Windows Auto (Wipe Hard Drive UEFI)](/html/win11/unattend-auto-uefi.xml)
-    - [Windows Windows Auto (Wipe Hard Drive Legacy)](/html/win11/unattend-auto-legacy.xml)
+    - Create using [schneegans unattended generator](https://schneegans.de/windows/unattend-generator/)
+        - Partitioning and formatting:
+            - Manual: Partition the disk interactively during Windows Setup
+            - Auto for UEFI: Let Windows Setup wipe, partition and format your hard drive (more specifically, disk 0) using these settings: GPT
+            - Auto for Legacy (PCBIOS): MBR
+    - For auto installations you need to add ```<WillShowUI>OnError</WillShowUI>``` to the following section, so that it looks like this:
+```
+			<ImageInstall>
+				<OSImage>
+					<InstallTo>
+						<DiskID>0</DiskID>
+						<PartitionID>3</PartitionID>
+					</InstallTo>
+					<WillShowUI>OnError</WillShowUI>
+				</OSImage>
+			</ImageInstall>
+```

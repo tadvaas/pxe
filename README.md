@@ -183,7 +183,7 @@ Mount the Windows image from the WIM file
 dism /mount-wim /wimfile:C:\install.wim /index:1 /mountdir:C:\Mount
 
 Add all updates from the Downloads folder to the mounted image
-for %f in (C:\Users\user\Downloads\*.msu) do dism /image:C:\Mount /add-package /packagepath:%f
+for %f in (C:\Updates\*.msu) do dism /image:C:\Mount /add-package /packagepath:%f
 
 Commit changes and unmount the image
 dism /unmount-wim /mountdir:C:\Mount /commit
@@ -192,4 +192,31 @@ Optionally remove the mount directory
 rmdir C:\Mount
 
 Copy the install.win to \\network share\win11\sources\
+
+## Debloat
+Create a mount directory
+mkdir C:\Mount
+
+Mount the Windows image from the WIM file
+dism /mount-wim /wimfile:C:\install.wim /index:1 /mountdir:C:\Mount
+
+### Steps to Adjust Execution Policy:
+Open PowerShell as Administrator:
+
+Right-click on PowerShell and choose "Run as administrator".
+Set the Execution Policy to Allow Script Running:
+
+Temporarily set the policy to allow unsigned scripts:
+```Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process```
+This will only apply to the current PowerShell session.
+
+Now, you can run your script:
+```.\removeappx.ps1```
+Return to Original Policy (Optional):
+```Set-ExecutionPolicy -ExecutionPolicy Restricted -Scope Process```
+
+Commit changes and unmount the image
+dism /unmount-wim /mountdir:C:\Mount /commit
+
+
 

@@ -218,5 +218,49 @@ Return to Original Policy (Optional):
 Commit changes and unmount the image
 dism /unmount-wim /mountdir:C:\Mount /commit
 
+## Logon Script to install updates
+
+```
+@echo off
+echo [%time%] [INFO] Starting post-installation update process...
+
+:: Map network drive for updates folder
+echo [%time%] [INFO] Attempting to map network share...
+net use Z: \\192.168.0.26\shared\win11\updates /persistent:no > nul 2>&1
+if errorlevel 1 (
+    echo [%time%] [ERROR] Failed to map network share.
+    exit /b 1
+)
+echo [%time%] [INFO] Network share mapped successfully.
+
+:: Set update folder path
+set updatesFolder=Z:
+
+:: Check if updates folder exists
+if not exist "%updatesFolder%" (
+    echo [%time%] [ERROR] Updates folder not found at %updatesFolder%.
+    net use Z: /delete > nul
+    exit /b 1
+)
+
+echo [%time%] [INFO] Updates folder found. Proceeding to install updates...
+
+:: Loop through all files in the updates folder and install them
+for %%f in (%updatesFolder%\*.*) do (
+    echo [%time%] [INFO] Installing %%f
+    wusa.exe "%%f" /quiet /norestart
+    if errorlevel 1 (
+        echo [%time%] [ERROR] Failed to install %%f.
+    ) else (
+        echo [%time%] [INFO] Successfully installed %%f.
+    )
+)
+
+:: Delete the mapped network drive
+net use Z: /delete > nul
+echo [%time%] [INFO] Finished installing updates.
+exit /b 0
+```
+
 
 

@@ -216,7 +216,7 @@ Return to Original Policy (Optional):
 ```Set-ExecutionPolicy -ExecutionPolicy Restricted -Scope Process```
 
 Commit changes and unmount the image
-dism /unmount-wim /mountdir:C:\Mount /commit
+```dism /unmount-wim /mountdir:C:\Mount /commit```
 
 ## Logon Script to install updates
 
@@ -261,6 +261,8 @@ net use Z: /delete > nul
 echo [%time%] [INFO] Finished installing updates.
 exit /b 0
 ```
+
+https://uupdump.net/known.php?q=category:w11-24h2
 
 
 

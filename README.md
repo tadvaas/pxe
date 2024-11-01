@@ -174,98 +174,6 @@ mkdir ~/samba/
 			</ImageInstall>
 ```
 
-## Add Windows updates to the image
-
-Create a mount directory
-mkdir C:\Mount
-
-Mount the Windows image from the WIM file
-dism /mount-wim /wimfile:C:\install.wim /index:1 /mountdir:C:\Mount
-
-Add all updates from the Downloads folder to the mounted image
-for %f in (C:\Updates\*.msu) do dism /image:C:\Mount /add-package /packagepath:%f
-
-Commit changes and unmount the image
-dism /unmount-wim /mountdir:C:\Mount /commit
-
-Optionally remove the mount directory
-rmdir C:\Mount
-
-Copy the install.win to \\network share\win11\sources\
-
-## Debloat
-Create a mount directory
-mkdir C:\Mount
-
-Mount the Windows image from the WIM file
-dism /mount-wim /wimfile:C:\install.wim /index:1 /mountdir:C:\Mount
-
-### Steps to Adjust Execution Policy:
-Open PowerShell as Administrator:
-
-Right-click on PowerShell and choose "Run as administrator".
-Set the Execution Policy to Allow Script Running:
-
-Temporarily set the policy to allow unsigned scripts:
-```Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process```
-This will only apply to the current PowerShell session.
-
-See the apps installed:
-```Get-AppxProvisionedPackage -Path C:\Mount | Select-Object DisplayName | Out-File C:\InstalledPackages.txt```
-
-Choose what you want to remove and add to removeappx.ps1
-
-Now, you can run your script:
-```.\removeappx.ps1```
-Return to Original Policy (Optional):
-```Set-ExecutionPolicy -ExecutionPolicy Restricted -Scope Process```
-
-Commit changes and unmount the image
-```dism /unmount-wim /mountdir:C:\Mount /commit```
-
-## Logon Script to install updates
-
-```
-@echo off
-echo [%time%] [INFO] Starting post-installation update process...
-
-:: Map network drive for updates folder
-echo [%time%] [INFO] Attempting to map network share...
-net use Z: \\192.168.0.26\shared\win11\updates /persistent:no > nul 2>&1
-if errorlevel 1 (
-    echo [%time%] [ERROR] Failed to map network share.
-    exit /b 1
-)
-echo [%time%] [INFO] Network share mapped successfully.
-
-:: Set update folder path
-set updatesFolder=Z:
-
-:: Check if updates folder exists
-if not exist "%updatesFolder%" (
-    echo [%time%] [ERROR] Updates folder not found at %updatesFolder%.
-    net use Z: /delete > nul
-    exit /b 1
-)
-
-echo [%time%] [INFO] Updates folder found. Proceeding to install updates...
-
-:: Loop through all files in the updates folder and install them
-for %%f in (%updatesFolder%\*.*) do (
-    echo [%time%] [INFO] Installing %%f
-    wusa.exe "%%f" /quiet /norestart
-    if errorlevel 1 (
-        echo [%time%] [ERROR] Failed to install %%f.
-    ) else (
-        echo [%time%] [INFO] Successfully installed %%f.
-    )
-)
-
-:: Delete the mapped network drive
-net use Z: /delete > nul
-echo [%time%] [INFO] Finished installing updates.
-exit /b 0
-```
 
 ## Download Windows and create via UUPD
 
@@ -283,3 +191,25 @@ SkipISO      =1
 SkipApps     =1
 AppsLevel    =4
 ```
+
+## Debloat
+Create a mount directory
+mkdir C:\Mount
+
+Mount the Windows image from the WIM file
+dism /mount-wim /wimfile:C:\install.wim /index:1 /mountdir:C:\Mount
+
+Temporarily set the policy to allow unsigned scripts:
+```Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process```
+This will only apply to the current PowerShell session.
+
+See the apps installed:
+```Get-AppxProvisionedPackage -Path C:\Mount | Select-Object DisplayName | Out-File C:\InstalledPackages.txt```
+
+Choose what you want to remove and add to removeappx.ps1
+
+Now, you can run your script:
+```.\removeappx.ps1```
+
+Commit changes and unmount the image
+```dism /unmount-wim /mountdir:C:\Mount /commit```

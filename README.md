@@ -210,6 +210,11 @@ Temporarily set the policy to allow unsigned scripts:
 ```Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process```
 This will only apply to the current PowerShell session.
 
+See the apps installed:
+```Get-AppxProvisionedPackage -Path C:\Mount | Select-Object DisplayName | Out-File C:\InstalledPackages.txt```
+
+Choose what you want to remove and add to removeappx.ps1
+
 Now, you can run your script:
 ```.\removeappx.ps1```
 Return to Original Policy (Optional):

@@ -20,8 +20,6 @@ $displayNamesToRemove = @(
     "Microsoft.SkypeApp",
     "Microsoft.BingWeather",
     "Microsoft.YourPhone",
-    "Microsoft.XboxGameCallableUI",
-    "MSTeams",
     "Microsoft.GamingApp",
     "Microsoft.BingSearch",
     "Microsoft.GetHelp",
@@ -31,13 +29,27 @@ $displayNamesToRemove = @(
     "Microsoft.ScreenSketch",
     "Microsoft.StorePurchaseApp",
     "Microsoft.Todos",
-    "Microsoft.Windows.Photos",
     "Microsoft.WindowsSoundRecorder",
     "Microsoft.WindowsStore",
     "Microsoft.ZuneMusic",
     "MicrosoftCorporationII.MicrosoftFamily",
     "MicrosoftCorporationII.QuickAssist",
-    "Microsoft.Windows.DevHome"
+    "Microsoft.Windows.DevHome",
+    "Microsoft.WindowsCamera",
+    "Microsoft.WindowsFeedbackHub",
+    "Microsoft.WindowsNotepad",
+    "Microsoft.WindowsCalculator",
+    "Microsoft.WindowsTerminal",
+    "Microsoft.Windows.Photos",
+    "Microsoft.Xbox.TCUI",
+    "Microsoft.XboxGamingOverlay",
+    "Microsoft.XboxIdentityProvider",
+    "Microsoft.XboxSpeechToTextOverlay",
+    "MicrosoftWindows.Client.WebExperience",
+    "MicrosoftWindows.CrossDevice"
+    "Microsoft.OneDrive",
+	"MSTeams",
+	"Microsoft.Windows.Ai.Copilot.Provider"
 )
 
 foreach ($displayName in $displayNamesToRemove) {

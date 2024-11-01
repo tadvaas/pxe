@@ -267,7 +267,19 @@ echo [%time%] [INFO] Finished installing updates.
 exit /b 0
 ```
 
+## Download Windows and create via UUPD
+
 https://uupdump.net/known.php?q=category:w11-24h2
 
+Edit: ConvertConfig.ini
 
+Change the following values:
+```
+[convert-UUP]
+AutoStart    =3
+SkipISO      =1
 
+[Store_Apps]
+SkipApps     =1
+AppsLevel    =4
+```

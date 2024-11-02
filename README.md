@@ -196,10 +196,18 @@ Run as administrator: ```uup_download_windows.cmd```
 
 When downloaded Run Powershell as admin:
 
-```mkdir C:\UUPD\Mount```
-```dism /mount-wim /wimfile:C:\UUPD\install.wim /index:1 /mountdir:C:\UUPD\Mount```
-```Set-ExecutionPolicy Bypass -Scope Process```
-```Get-AppxProvisionedPackage -Path C:\UUPD\Mount | Select-Object DisplayName | Out-File C:\UUPD\InstalledPackages.txt```
+```
+mkdir C:\UUPD\Mount
+```
+```
+dism /mount-wim /wimfile:C:\UUPD\install.wim /index:1 /mountdir:C:\UUPD\Mount
+```
+```
+Set-ExecutionPolicy Bypass -Scope Process
+```
+```
+Get-AppxProvisionedPackage -Path C:\UUPD\Mount | Select-Object DisplayName | Out-File C:\UUPD\InstalledPackages.txt
+```
 
 Review `InstalledPackages.txt` and add app removal commands in `removeappx.ps1`. Then:
 ```powershell

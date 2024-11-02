@@ -163,15 +163,8 @@ mkdir ~/samba/
             - Auto for Legacy (PCBIOS): MBR
     - For auto installations you need to add ```<WillShowUI>OnError</WillShowUI>``` to the following section, so that it looks like this:
 ```
-			<ImageInstall>
-				<OSImage>
-					<InstallTo>
-						<DiskID>0</DiskID>
-						<PartitionID>3</PartitionID>
-					</InstallTo>
-					<WillShowUI>OnError</WillShowUI>
-				</OSImage>
-			</ImageInstall>
+</InstallTo>
+<WillShowUI>OnError</WillShowUI>
 ```
 
 
@@ -179,37 +172,33 @@ mkdir ~/samba/
 
 https://uupdump.net/known.php?q=category:w11-24h2
 
-Edit: ConvertConfig.ini
-
-Change the following values:
+```bash
+mkdir C:\UUPD
+notepad C:\UUPD\ConvertConfig.ini
 ```
+
+Edit the following in `ConvertConfig.ini`:
+```ini
 [convert-UUP]
-AutoStart    =3
-SkipISO      =1
+AutoStart = 3
+SkipISO = 1
 
 [Store_Apps]
-SkipApps     =1
-AppsLevel    =4
+SkipApps = 1
+AppsLevel = 0
 ```
 
-## Debloat
-Create a mount directory
-mkdir C:\Mount
+```bash
+mkdir C:\UUPD\Mount && dism /mount-wim /wimfile:C:\UUPD\install.wim /index:1 /mountdir:C:\UUPD\Mount
+powershell -Command "Set-ExecutionPolicy Bypass -Scope Process" 
+powershell -Command "Get-AppxProvisionedPackage -Path C:\UUPD\Mount | Select-Object DisplayName | Out-File C:\UUPD\InstalledPackages.txt"
+```
 
-Mount the Windows image from the WIM file
-dism /mount-wim /wimfile:C:\install.wim /index:1 /mountdir:C:\Mount
+Review `InstalledPackages.txt` and add app removal commands in `removeappx.ps1`. Then:
+```powershell
+powershell -File .\removeappx.ps1
+```
 
-Temporarily set the policy to allow unsigned scripts:
-```Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process```
-This will only apply to the current PowerShell session.
-
-See the apps installed:
-```Get-AppxProvisionedPackage -Path C:\Mount | Select-Object DisplayName | Out-File C:\InstalledPackages.txt```
-
-Choose what you want to remove and add to removeappx.ps1
-
-Now, you can run your script:
-```.\removeappx.ps1```
-
-Commit changes and unmount the image
-```dism /unmount-wim /mountdir:C:\Mount /commit```
+```bash
+dism /unmount-wim /mountdir:C:\UUPD\Mount /commit
+```

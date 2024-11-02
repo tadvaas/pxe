@@ -187,6 +187,7 @@ SkipISO = 1
 SkipApps = 1
 AppsLevel = 0
 ```
+Download and compile install.wim
 
 ```bash
 mkdir C:\UUPD\Mount && dism /mount-wim /wimfile:C:\UUPD\install.wim /index:1 /mountdir:C:\UUPD\Mount

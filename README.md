@@ -170,7 +170,7 @@ mkdir ~/samba/
 
 ## Download Windows and create via UUPD
 
-<a href="https://uupdump.net/known.php?q=category:w11-24h2" target="_blank">UUPD 24H2</a>
+[UUPD 24H2](https://uupdump.net/known.php?q=category:w11-24h2){:target="_blank"}
 
 ```bash
 mkdir C:\UUPD

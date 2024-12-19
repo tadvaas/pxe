@@ -172,13 +172,13 @@ mkdir ~/samba/
 
 [UUPD 24H2](https://uupdump.net/known.php?q=category:w11-24h2)
 
-```bash
+```
 mkdir C:\UUPD
 notepad C:\UUPD\ConvertConfig.ini
 ```
 
-Edit the following in `ConvertConfig.ini`:
-```ini
+1. Edit the following in `ConvertConfig.ini`:
+```
 [convert-UUP]
 AutoStart    =3
 SkipISO      =1
@@ -188,36 +188,16 @@ SkipApps     =1
 CustomList   =1
 ```
 
-Edit ```CustomAppsList.txt``` to exclude all non-wanted apps
+2. Edit ```CustomAppsList.txt``` to exclude all non-wanted apps
 
-Download and compile install.wim:
+3. Download and compile install.wim:
 
-Run as administrator: ```uup_download_windows.cmd```
+4. Run as administrator: ```uup_download_windows.cmd```
 
-When downloaded Run Powershell as admin:
+5. Place install.wim to /samba/win11/sources/ (overwrite)
 
-```
-mkdir C:\UUPD\Mount
-```
-```
-dism /mount-wim /wimfile:C:\UUPD\install.wim /index:1 /mountdir:C:\UUPD\Mount
-```
-```
-Set-ExecutionPolicy Bypass -Scope Process
-```
-```
-Get-AppxProvisionedPackage -Path C:\UUPD\Mount | Select-Object DisplayName | Out-File C:\UUPD\InstalledPackages.txt
-```
 
-Review `InstalledPackages.txt` and add app removal commands in `removeappx.ps1`. Then:
-```powershell
-powershell -File .\removeappx.ps1
-```
-
-```bash
-dism /unmount-wim /mountdir:C:\UUPD\Mount /commit
-```
-
+# Appendix 
 
 ## For DELL R8153 v1
 - Create USB iPXE boot file ```cd src/ && make bin-x86_64-efi/ecm.usb```

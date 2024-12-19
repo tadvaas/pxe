@@ -217,3 +217,6 @@ powershell -File .\removeappx.ps1
 ```bash
 dism /unmount-wim /mountdir:C:\UUPD\Mount /commit
 ```
+
+
+## For DELL R8153

@@ -219,14 +219,25 @@ dism /unmount-wim /mountdir:C:\UUPD\Mount /commit
 ```
 
 
-## For DELL R8153
+## For DELL R8153 v1
 - Create USB iPXE boot file ```cd src/ && make bin-x86_64-efi/ecm.usb```
 - Write ecm.usb to USB dongle using Rufus
+- Make sure **Secure Boot** is disabled
+- Make sure **UEFI Ethernet Stack** is enabled
 - Disconnect all USB ethernet adapters
-- Boot the PC using UEFI into the USB dongle
+- Boot the PC using UEFI into the USB dongle (F12)
 - Get into iPXE command line using Ctrl + B
 - Connect the USB ethernet adapter
 - Issue a command ```ifopen```
 - Issue a command ```dhcp```
 - Issue a command ```chain http://192.168.0.26/win11/boot.pxe```
+- Proceed as normal thereafter
+
+## For DELL R8153 v2
+- Enter setup whilst booting (F2) 
+    - Disable **Secure Boot**
+    - Disable **UEFI Ethernet Stack**
+- Connect USB dongle with ecm.usb
+- Connect USB ethernet adapter
+- Boot the PC using UEFI into the USB dongle (F12)
 - Proceed as normal thereafter

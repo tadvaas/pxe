@@ -223,7 +223,7 @@ dism /unmount-wim /mountdir:C:\UUPD\Mount /commit
 - Create USB iPXE boot file ```cd src/ && make bin-x86_64-efi/ecm.usb```
 - Write ecm.usb to USB dongle using Rufus
 - Disconnect all USB ethernet adapters
-- Boot the PC using EUFI into the USB dongle
+- Boot the PC using UEFI into the USB dongle
 - Get into iPXE command line using Ctrl + B
 - Connect the USB ethernet adapter
 - Issue a command ```ifopen```

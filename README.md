@@ -170,7 +170,12 @@ mkdir ~/samba/
 
 ## Download Windows and create via UUPD
 
-[UUPD 24H2](https://uupdump.net/known.php?q=category:w11-24h2)
+[Download UUPD 24H2](https://uupdump.net/known.php?q=category:w11-24h2)
+- Browse for latest version (x64, skip the *Cumulative*)
+- Language English (United Kingdom) [**This is important!**]
+- Edition Windows Pro (Only)
+- Download method: *Download and convert to ISO*
+- Conversion options: All except *Use solid (ESD) compression*
 
 ```
 mkdir C:\UUPD

@@ -107,7 +107,7 @@ Create boot.ipxe in ~/html/win11/:
 
 ## DHCP server: Kea on pfSense
 Expand **Network Booting** && **Enable Network Booting**
-- **Next Server:** [TFTP Server IP]
+- **Next Server:** 192.168.0.26
 - **Default BIOS File Name:** undionly.kpxe
 - **UEFI 32 bit File Name:** ipxe.efi
 - **UEFI 64 bit File Name:** ipxe.efi
@@ -174,7 +174,7 @@ mkdir ~/samba/
 
 ## Download Windows and create via UUPD
 
-[Download UUPD 24H2](https://uupdump.net/known.php?q=category:w11-24h2)
+[Download UUPD 24H2](https://uupdump.net/known.php)
 - Browse for latest version (x64, skip the *Cumulative*)
 - Language English (United Kingdom) [**This is important!**]
 - Edition Windows Pro (Only)

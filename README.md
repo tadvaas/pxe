@@ -174,7 +174,7 @@ mkdir ~/samba/
 
 ## Download Windows and create via UUPD
 
-[Download UUPD 24H2](https://uupdump.net/known.php)
+[Download UUPD](https://uupdump.net/fetchupd.php?arch=amd64&ring=retail)
 - Browse for latest version (x64, skip the *Cumulative*)
 - Language English (United Kingdom) [**This is important!**]
 - Edition Windows Pro (Only)

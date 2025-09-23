@@ -46,12 +46,12 @@ cd ~/ipxe/src && make bin-x86_64-efi/ipxe.efi
 ```
 - **autoexec.ipxe**: this is auto-loaded file that **ipxe.efi** loads as firmware boots, we add instructions to load further files from the server:
 ```
-echo -e 'dhcp\nchain http://192.168.0.26/boot.ipxe' | tee ~/tftp/autoexec.ipxe
+cp ~/ipxe/src/embedded.ipxe ~/tftp/autoexec.ipxe
 ```
 ### Copy firmware TFTP server
 ```
 cp bin-x86_64-efi/ipxe.efi ~/tftp/
-cp bin/undionly.kpxe ~/tftp/undionly.kpxe
+cp bin/undionly.kpxe ~/tftp/
 ```
 
 ## HTTP server: nginx

@@ -28,7 +28,7 @@ git clone https://github.com/ipxe/ipxe.git && cd ipxe/src
 ```
 Create ~/ipxe/src/embedded.ipxe file:
 ```
-echo -e 'dhcp\nchain [your-http-path]/boot.ipxe' | tee ~/ipxe/src/embedded.ipxe
+echo -e 'dhcp\nchain http://192.168.0.26/boot.ipxe' | tee ~/ipxe/src/embedded.ipxe
 ```
 
 Install required tools and compile new **undionly.pxe** boot firmware:
@@ -39,14 +39,15 @@ sudo apt install gcc binutils make perl liblzma-dev xz-utils mtools genisoimage 
 ### For UEFI bios client boots 
 
 Files:
-- **uefi.pxe**: original to be used is fine
-- **autoexec.ipxe**: this is auto-loaded file that **eufi.pxe** loads as firmware boots, we add instructions to load further files from http server:
+- **ipxe.efi**: original to be used is fine (it will automatically read **autoexec.ipxe** for instructions)
+    - ```cd ~/ipxe/src && make bin-x86_64-efi/ipxe.efi```
+- **autoexec.ipxe**: this is auto-loaded file that **ipxe.efi** loads as firmware boots, we add instructions to load further files from the server:
 ```
-echo -e 'dhcp\nchain [your-http-path]/boot.ipxe' | tee ~/tftp/autoexec.ipxe
+echo -e 'dhcp\nchain http://192.168.0.26/boot.ipxe' | tee ~/tftp/autoexec.ipxe
 ```
 ### Copy firmware TFTP server
 ```
-cp bin-x86_64-efi/ipxe.efi ~/tftp/ipxe.efi
+cp bin-x86_64-efi/ipxe.efi ~/tftp/
 cp bin/undionly.kpxe ~/tftp/undionly.kpxe
 ```
 

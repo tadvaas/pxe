@@ -40,7 +40,10 @@ sudo apt install gcc binutils make perl liblzma-dev xz-utils mtools genisoimage 
 
 Files:
 - **ipxe.efi**: original to be used is fine (it will automatically read **autoexec.ipxe** for instructions)
-    - ```cd ~/ipxe/src && make bin-x86_64-efi/ipxe.efi```
+    - make the file: 
+```
+cd ~/ipxe/src && make bin-x86_64-efi/ipxe.efi
+```
 - **autoexec.ipxe**: this is auto-loaded file that **ipxe.efi** loads as firmware boots, we add instructions to load further files from the server:
 ```
 echo -e 'dhcp\nchain http://192.168.0.26/boot.ipxe' | tee ~/tftp/autoexec.ipxe

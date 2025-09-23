@@ -103,7 +103,7 @@ Create winpeshl.ini in ~/html/win11/:
 
 Create boot.ipxe in ~/html/win11/:
 
-[boot.ipxe](/html/win11/boot.ipxe)
+[boot.ipxe](/html/boot.ipxe)
 
 ## DHCP server: Kea on pfSense
 Expand **Network Booting** && **Enable Network Booting**

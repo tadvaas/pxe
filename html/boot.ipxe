@@ -20,12 +20,15 @@ goto end_menu
 
 :end_menu
 # Shared options for both BIOS and UEFI
+item ubuntu2204 Ubuntu 22.04 Server Install
+item clonezilla_debian  Boot Clonezilla Debian
 item hirens     Boot Hirens BootCD PE
 item shredos    Boot ShredOS
+item ipxe_shell iPXE Shell
 item --gap -- ----------------------
 item reboot     Reboot
 
-choose --default local --timeout 10000 target && goto ${target}
+choose --default win11au --timeout 15000 target && goto ${target}
 
 set base-url http://192.168.0.26/
 
@@ -67,10 +70,33 @@ boot
 :shredos
 dhcp
 kernel ${base-url}/shredos/boot/shredos console=tty3 quiet loglevel=0 loadkeys=uk rw \
-        nwipe_options="--method=zero --verify=off --noblank --nousb" \
+        nwipe_options="--method=zero --verify=off --noblank --autonuke --autopoweroff" \
         lftp="set sftp:auto-confirm true; open sftp://shredos:shredos@192.168.0.18; \
               cd /home/shredos/reports/; mput *.pdf; \
               cd /home/shredos/logs/; mput nwipe_*.txt;"
+boot
+
+:ipxe_shell
+shell
+
+:ubuntu2204
+dhcp
+kernel ${base-url}/ubuntu/casper/vmlinuz 
+initrd ${base-url}/ubuntu/casper/initrd
+imgargs vmlinuz url=http://192.168.0.26/ubuntu/ubuntu-24.04.2-live-server-amd64.iso boot=casper net.ifnames=0 biosdevname=0 ip=dhcp
+boot
+
+:clonezilla_debian
+echo Booting Clonezilla (Debian-based)
+set cz http://192.168.0.26/clonezilla/live
+kernel ${cz}/vmlinuz boot=live union=overlay config components \
+       noswap nomodeset noeject edd=on \
+       ipv6.disable=1 net.ifnames=0 biosdevname=0 \
+       locales=en_GB.UTF-8 keyboard-layouts=gb \
+       ocs_live_run="ocs-live-general" ocs_live_batch=no \
+	   modules=mpt3sas \
+       fetch=${cz}/filesystem.squashfs
+initrd ${cz}/initrd.img
 boot
 
 :reboot

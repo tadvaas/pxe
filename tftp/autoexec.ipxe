@@ -2,4 +2,4 @@
 dhcp
 
 echo "Booting..."
-chain http://192.168.0.26/win11/boot.ipxe  # Chain to another script
+chain http://192.168.0.26/boot.ipxe  # Chain to another script

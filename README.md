@@ -54,6 +54,27 @@ cp bin-x86_64-efi/ipxe.efi ~/tftp/
 cp bin/undionly.kpxe ~/tftp/
 ```
 
+### Bugs
+Some HP laptops and workstations expose multiple NICs in UEFI, including virtual adapters (e.g., wireless, USB LAN, WWAN, Intel AMT/ME, etc.). During PXE boot, these systems successfully download the initial iPXE firmware and chainloaded files using one NIC, but when iPXE transitions into its own driver stage, it may select a different NIC (e.g., eth1 instead of eth0). If the NIC chosen by iPXE is not active or does not have a link, iPXE displays an error such as:
+No more network devices
+or
+No such device
+
+This behaviour happens because ipxe.efi includes iPXE’s own native network drivers, and on some HP systems these native drivers do not correctly match the NIC exposed during firmware PXE.
+
+The fix is to use snp.efi instead of ipxe.efi.
+- snp.efi uses the UEFI firmware’s built-in Simple Network Protocol (SNP) driver instead of replacing it with iPXE’s own driver.
+- This keeps the NIC consistent throughout the boot process and prevents interface switching and “no device found” errors.
+
+## How to Generate snp.efi
+```
+make bin-x86_64-efi/snp.efi EMBED=embedded.ipxe
+cp bin-x86_64-efi/snp.efi ~/tftp/
+```
+
+UEFI 64-bit File Name: snp.efi in the DHCP server settings
+
+
 ## HTTP server: nginx
 
 To server WinPE files we install nginx http server:

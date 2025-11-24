@@ -66,7 +66,7 @@ The fix is to use snp.efi instead of ipxe.efi.
 - snp.efi uses the UEFI firmware’s built-in Simple Network Protocol (SNP) driver instead of replacing it with iPXE’s own driver.
 - This keeps the NIC consistent throughout the boot process and prevents interface switching and “no device found” errors.
 
-## How to Generate snp.efi
+#### How to Generate snp.efi
 ```
 make bin-x86_64-efi/snp.efi EMBED=embedded.ipxe
 cp bin-x86_64-efi/snp.efi ~/tftp/
@@ -129,9 +129,9 @@ Create boot.ipxe in ~/html/win11/:
 ## DHCP server: Kea on pfSense
 Expand **Network Booting** && **Enable Network Booting**
 - **Next Server:** 192.168.0.26
-- **Default BIOS File Name:** undionly.kpxe
-- **UEFI 32 bit File Name:** ipxe.efi
-- **UEFI 64 bit File Name:** ipxe.efi
+- **Default BIOS File Name:** undionly.kpxe or snp.efi
+- **UEFI 32 bit File Name:** ipxe.efi or snp.efi
+- **UEFI 64 bit File Name:** ipxe.efi or snp.efi
 
 ## Network share: Samba
 Install:

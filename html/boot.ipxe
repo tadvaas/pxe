@@ -1,5 +1,6 @@
 #!ipxe
 :start
+
 menu Boot Menu
 item --gap -- ----------------------
 
@@ -20,13 +21,14 @@ goto end_menu
 
 :end_menu
 # Shared options for both BIOS and UEFI
-item ubuntu2204 Ubuntu 22.04 Server Install
-item clonezilla_debian  Boot Clonezilla Debian
-item hirens     Boot Hirens BootCD PE
-item shredos    Boot ShredOS
-item ipxe_shell iPXE Shell
+item ubuntu2204 		Ubuntu 22.04 Server Install
+item clonezilla_debian  Clonezilla Debian
+item hirens     		Hirens BootCD PE
+item shredos    		ShredOS
+item shredos_siemens	ShredOS (Siemens)
+item ipxe_shell 		iPXE Shell
 item --gap -- ----------------------
-item reboot     Reboot
+item reboot     		Reboot
 
 choose --default win11au --timeout 15000 target && goto ${target}
 
@@ -71,9 +73,16 @@ boot
 dhcp
 kernel ${base-url}/shredos/boot/shredos console=tty3 quiet loglevel=0 loadkeys=uk rw \
         nwipe_options="--method=zero --verify=off --noblank --autonuke --autopoweroff" \
-        lftp="set sftp:auto-confirm true; open sftp://shredos:shredos@192.168.0.18; \
-              cd /home/shredos/reports/; mput *.pdf; \
-              cd /home/shredos/logs/; mput nwipe_*.txt;"
+		shredos_config="ftp:192.168.0.18:/home/shredos/config/:shredos:shredos:" \
+		shredos_output="ftp:192.168.0.18:/home/shredos/reports/:shredos:shredos:"
+boot
+
+:shredos_siemens
+dhcp
+kernel ${base-url}/shredos/boot/shredos console=tty3 quiet loglevel=0 loadkeys=uk rw \
+        nwipe_options="--method=zero --verify=off --noblank --autonuke --autopoweroff" \
+		shredos_config="ftp:192.168.0.18:/home/shredos/config/siemens/:shredos:shredos:" \
+		shredos_output="ftp:192.168.0.18:/home/shredos/reports/siemens/:shredos:shredos:"
 boot
 
 :ipxe_shell
@@ -98,6 +107,3 @@ kernel ${cz}/vmlinuz boot=live union=overlay config components \
        fetch=${cz}/filesystem.squashfs
 initrd ${cz}/initrd.img
 boot
-
-:reboot
-reboot

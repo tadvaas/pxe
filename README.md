@@ -159,6 +159,18 @@ Expand **Network Booting** && **Enable Network Booting**
 - **UEFI 32 bit File Name:** ipxe.efi or snp.efi
 - **UEFI 64 bit File Name:** ipxe.efi or snp.efi
 
+## Booting ShredOS with secure boot enabled
+
+### Concept
+UEFI Secure Boot -> shim.efi (MS-signed) -> grubx64.efi (your signed iPXE) -> embedded.ipxe → loads your boot.ipxe -> iPXE loads ShredOS/Ubuntu/etc via shim command
+
+#### Get the Microsoft-signed shim & MOK Manager
+```
+sudo apt install shim-signed
+sudo cp /usr/lib/shim/shimx64.efi.signed ./shim.efi
+sudo cp /usr/lib/shim/mmx64.efi ./mmx64.efi
+```
+
 ## Network share: Samba
 Install:
 ```

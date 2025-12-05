@@ -9,8 +9,8 @@ mkdir ~/tftp/
 
 Edit /etc/default/tftp-hpa:
 ```
-TFTP_USERNAME="oxwet"
-TFTP_DIRECTORY="/home/oxwet/tftp/"
+TFTP_USERNAME="user"
+TFTP_DIRECTORY="/home/user/tftp/"
 TFTP_ADDRESS="0.0.0.0:69"
 TFTP_OPTIONS="--secure --ipv4 -vvv --map-file /etc/default/tftpd-hpa.map"
 ```
@@ -93,7 +93,7 @@ server {
     listen 80 default_server;
     listen [::]:80 default_server;
 
-    root /home/oxwet/html;
+    root /home/user/html;
     index index.html;
 
     server_name _;
@@ -245,10 +245,10 @@ Edit config file /etc/samba/smb.conf:
 ```
 [global]
 map to guest = Bad User
-guest account = oxwet
+guest account = user
 
 [shared]
-path = /home/oxwet/samba
+path = /home/user/samba
 browseable = yes
 read only = no
 guest ok = yes

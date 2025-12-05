@@ -230,10 +230,11 @@ boot
 - Copy ENROLL_THIS_KEY_IN_MOK_MANAGER.cer to root
 
 ### First secure boot key enrollment
-- The computer will come up with error
-- Enroll hash or key once
+- The machine will come up with error
+- Insert USB with ENROLL_THIS_KEY_IN_MOK_MANAGER.cer
+- Use MOK Manager to enroll KEY
 - Reboot
-- Smooth sailing
+- Smooth sailing from now on
 
 ## Network share: Samba
 Install:

@@ -164,11 +164,65 @@ Expand **Network Booting** && **Enable Network Booting**
 ### Concept
 UEFI Secure Boot -> shim.efi (MS-signed) -> grubx64.efi (your signed iPXE) -> embedded.ipxe → loads your boot.ipxe -> iPXE loads ShredOS/Ubuntu/etc via shim command
 
-#### Get the Microsoft-signed shim & MOK Manager
+### Create a working directory
+```
+mkdir -p ~/ipxe-sb && cd ~/ipxe-sb
+```
+
+### Get the Microsoft-signed shim & MOK Manager
 ```
 sudo apt install shim-signed
-sudo cp /usr/lib/shim/shimx64.efi.signed ./shim.efi
-sudo cp /usr/lib/shim/mmx64.efi ./mmx64.efi
+sudo cp /usr/lib/shim/shimx64.efi.signed ~/ipxe-sb/shim.efi
+sudo cp /usr/lib/shim/mmx64.efi ~/ipxe-sb/mmx64.efi
+```
+
+### Create your iPXE signing key (MOK key)
+```
+openssl genrsa -out vendor.key 2048
+
+openssl req -x509 -new -nodes \
+  -key vendor.key \
+  -subj "/CN=My iPXE Vendor Key/" \
+  -days 3650 \
+  -out vendor.crt
+ 
+openssl x509 -in vendor.crt -outform DER -out ENROLL_THIS_KEY_IN_MOK_MANAGER.cer
+```
+
+### Sign iPXE and rename it to grubx64.efi
+```
+sbsign --key vendor.key --cert vendor.crt \
+  --output grubx64.efi bin-x86_64-efi/ipxe.efi
+```
+
+### Sign shredos image
+```
+cp ~/html/shredos/boot/shredos shredos.unsigned
+sbsign --key vendor.key --cert vendor.crt --output shredos.signed shredos.unsigned
+cp shredos.signed ~/html/shredos/boot/shredos
+```
+
+### Ad files to TFTP server
+```
+cp shim.efi ~/tftp/
+cp mmx64.efi ~/tftp/
+cp grubx64.efi ~/tftp/
+cp /usr/lib/shim/fbx64.efi ~/tftp/revocations.efi
+```
+
+### DHCP server config
+UEFI 64 bit File Name = shim.efi
+
+### Adjust iPXE boot menu file (boot.ipxe)
+Load shim.efi before any signed Linux kernel:
+
+Example for ShredOS:
+```
+:shredos
+dhcp
+shim tftp://192.168.0.26/shim.efi
+kernel ${base-url}/shredos/boot/shredos ...
+boot
 ```
 
 ## Network share: Samba

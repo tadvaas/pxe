@@ -225,6 +225,16 @@ kernel ${base-url}/shredos/boot/shredos ...
 boot
 ```
 
+### Prepare USB with key
+- Format any USB as FAT32
+- Copy ENROLL_THIS_KEY_IN_MOK_MANAGER.cer to root
+
+### First secure boot key enrollment
+- The computer will come up with error
+- Enroll hash or key once
+- Reboot
+- Smooth sailing
+
 ## Network share: Samba
 Install:
 ```

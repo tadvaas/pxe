@@ -236,6 +236,34 @@ boot
 - Reboot
 - Smooth sailing from now on
 
+## Update ShredOS, re-sign and re-deploy
+
+### Directories
+mkdir -p ~/work-shredos/{img,downloads,tmp}
+
+### Download
+https://github.com/PartialVolume/shredos.x86_64/releases/
+
+### Copy
+LOOP=$(sudo losetup --find --show -Pf ~/work-shredos/downloads/shredos-*.img)
+lsblk "$LOOP"
+sudo mount -o ro ${LOOP}p1 ~/work-shredos/img
+cp -a ~/work-shredos/img/. ~/work-shredos/tmp/
+sudo umount ~/work-shredos/img
+sudo losetup -d "$LOOP"
+
+### Sign
+cd ~/work-shredos/tmp
+mv bzImage bzImage.original
+sbsign --key ~/ipxe-sb/vendor.key --cert ~/ipxe-sb/vendor.crt --outout bzImage.signed bzImage.original
+sbverify --list bzImage.signed
+mv bzImage.signed bzImage
+
+### Deploy
+mkdir ~/html/shredos_0.40/
+cp -r ~/work-shredos/tmp/* ~/html/shredos_0.40/
+boot.ipxe -> ${base-url}/shredos_0.40/boot/bzImage
+
 ## Network share: Samba
 Install:
 ```

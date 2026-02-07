@@ -239,18 +239,18 @@ boot
 ## Update ShredOS, re-sign and re-deploy
 
 ### Directories
-mkdir -p ~/work-shredos/{img,downloads,tmp}
+```mkdir -p ~/work-shredos/{img,downloads,tmp}```
 
 ### Download
 https://github.com/PartialVolume/shredos.x86_64/releases/
 
 ### Copy
-LOOP=$(sudo losetup --find --show -Pf ~/work-shredos/downloads/shredos-*.img)
-lsblk "$LOOP"
-sudo mount -o ro ${LOOP}p1 ~/work-shredos/img
-cp -a ~/work-shredos/img/. ~/work-shredos/tmp/
-sudo umount ~/work-shredos/img
-sudo losetup -d "$LOOP"
+```LOOP=$(sudo losetup --find --show -Pf ~/work-shredos/downloads/shredos-*.img)```
+```lsblk "$LOOP"```
+```sudo mount -o ro ${LOOP}p1 ~/work-shredos/img```
+```cp -a ~/work-shredos/img/. ~/work-shredos/tmp/```
+```sudo umount ~/work-shredos/img```
+```sudo losetup -d "$LOOP"```
 
 ### Sign
 cd ~/work-shredos/tmp

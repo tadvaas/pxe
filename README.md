@@ -297,6 +297,11 @@ Create server directory:
 mkdir ~/samba/
 ```
 
+### On Windows 11 run the following in Power Shell as admin
+```
+Set-SmbClientConfiguration -RequireSecuritySignature $false -Force
+```
+
 ## WinPE files
   - Download & install Windows Deployment and Imaging Tools Environment
   - Extract image using DISM ```copype amd64 C:\WinPE_amd64```

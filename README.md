@@ -281,15 +281,63 @@ sudo apt install samba
 Edit config file /etc/samba/smb.conf:
 ```
 [global]
-map to guest = Bad User
-guest account = user
+   # --- Basic Identity ---
+   workgroup = WORKGROUP
+   server string = Maggie Extra Server
+   netbios name = MAGGIE-EXTRA
 
-[shared]
-path = /home/user/samba
-browseable = yes
-read only = no
-guest ok = yes
+   # --- Security & Access ---
+   # This allows you to log in with the Linux user 'shredos' 
+   # and the password you set via 'smbpasswd -a shredos'
+   security = user
+   map to guest = Bad User
+   
+   # --- Windows 11 Compatibility ---
+   # Win11 rejects SMB1. These force modern, encrypted handshakes.
+   server min protocol = SMB2_10
+   server max protocol = SMB3
+   client ipc min protocol = SMB2_10
+   ntlm auth = yes
 
+   # --- macOS "Infinite Loading" Fix (VFS Fruit) ---
+   # This makes Samba mimic an Apple File Server (AFP)
+   vfs objects = catia fruit streams_xattr
+   fruit:metadata = netatalk
+   fruit:model = MacSamba
+   fruit:posix_rename = yes
+   fruit:veto_appledouble = no
+   fruit:nfs_aces = no
+   fruit:wipe_abe = yes
+   ea support = yes
+
+[Reports]
+   comment = ShredOS Data Destruction Reports
+   path = /home/shredos/reports
+   browseable = yes
+   read only = no
+   writable = yes
+   guest ok = no
+   
+   # --- User & Permission Mapping ---
+   # This ensures that even if you connect from different OSs, 
+   # files are always written as the 'shredos' user on disk.
+   valid users = shredos
+   force user = shredos
+   force group = shredos
+   
+   # Standard Linux permissions for new files
+   create mask = 0664
+   directory mask = 0775
+   
+   # Prevents Mac metadata files from cluttering the view for Windows users
+   veto files = /._*/.DS_Store/
+   delete veto files = yes
+```
+
+Add shredos user for saving & downloading reports:
+```
+sudo smbpasswd -a shredos then sudo smbpasswd -e ***
+sudo systemctl restart smbd
 ```
 
 Create server directory:

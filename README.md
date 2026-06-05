@@ -332,6 +332,16 @@ Edit config file /etc/samba/smb.conf:
    # Prevents Mac metadata files from cluttering the view for Windows users
    veto files = /._*/.DS_Store/
    delete veto files = yes
+
+[shared]
+   comment = Samba Folder (Guest Access)
+   path = /home/oxwet/samba/
+   browseable = yes
+   read only = yes
+   writable = no
+   guest ok = yes
+   public = yes
+   force user = nobody
 ```
 
 Add shredos user for saving & downloading reports:

@@ -258,18 +258,18 @@ sudo losetup -d "$LOOP"
 
 ### Sign
 ```
-cd ~/work-shredos/tmp
+cd ~/work-shredos/tmp/boot
 mv bzImage bzImage.original
-sbsign --key ~/ipxe-sb/vendor.key --cert ~/ipxe-sb/vendor.crt --outout bzImage.signed bzImage.original
+sbsign --key ~/ipxe-sb/vendor.key --cert ~/ipxe-sb/vendor.crt --output bzImage.signed bzImage.original
 sbverify --list bzImage.signed
 mv bzImage.signed bzImage
 ```
 
 ### Deploy
 ```
-mkdir ~/html/shredos_0.40/
+mkdir ~/html/shredos_0.40/ change version
 cp -r ~/work-shredos/tmp/* ~/html/shredos_0.40/
-boot.ipxe -> ${base-url}/shredos_0.40/boot/bzImage
+Change boot.ipxe -> ${base-url}/shredos_0.40/boot/bzImage
 ```
 
 ## Network share: Samba
